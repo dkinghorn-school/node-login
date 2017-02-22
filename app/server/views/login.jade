@@ -6,10 +6,10 @@ block content
 	#login.center-vertical
 		form.well(id='form-login', method='post')
 			h2 Hello!
-			h6 Please Login To Your Account
+			h6 !{title}
 			.form-group
 				label Username
-				input.form-control(type='text', id='user-tf', name='user')
+				input.form-control(type='text', id='user-tf', name='user', value='#{nonce}')
 			.form-group
 				label Password
 				input.form-control(type='password', id='pass-tf', name='pass')
