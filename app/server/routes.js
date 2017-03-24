@@ -3,13 +3,19 @@ var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
 
+let nonce = 2346234123457632;
+
 module.exports = function(app) {
 
 // main login page //
 	app.get('/', function(req, res){
 	// check if the user's credentials are saved in a cookie //
+		if(req.headers.publicKey) {
+			
+		}
 		if (req.cookies.user == undefined || req.cookies.pass == undefined){
-			res.render('login', { title: 'Hello - Please Login To Your Account', nonce: (Math.random()*100000000000000000)});
+			res.setHeader("nonce", nonce)
+			res.render('login', { title: 'Hello - Please Login To Your Account', nonce: nonce});
 		}	else{
 	// attempt automatic login //
 			AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
@@ -24,6 +30,7 @@ module.exports = function(app) {
 	});
 	
 	app.post('/', function(req, res){
+
 		AM.manualLogin(req.body['user'], req.body['pass'], function(e, o){
 			if (!o){
 				res.status(400).send(e);
